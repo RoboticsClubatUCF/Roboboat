@@ -1,0 +1,7 @@
+CHN1: Right Stick = [Left, Center, Right] -> rcChannels[0] = [1113, 1527, 1933]
+CHN2: Right Stick = [Up,   Center, Down]  -> rcChannels[1] = [1078, 1490, 1900]
+CHN3: Left Stick  = [Up,   Center, Down]  -> rcChannels[2] = [1076, 1497, 1902]
+CHN4: Left Stick  = [Left, Center, Right] -> rcChannels[3] = [1074, 1487, 1900]
+CHN5: SW G        = [ESTOP, READY]        -> rcChannels[4] = [934, 2043] 
+CHN6: VR CH6(Knob)= [CCW, CW]             -> rcChannels[5] = [967, 2075]
+CHN7: SW E        = [Actuator, Dyna, Pump]-> rcChannels[6] = [967, 1523, 2076]
