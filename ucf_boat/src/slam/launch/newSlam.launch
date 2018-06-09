@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<launch>
+	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+    		<rosparam command="load" file="/home/roboticsclub/ekf_template_custom.yaml" />
+		<!--<remap from="/set_pose" to="/odometry/gps"/>-->
+	</node>
+
+	<node name="advanced_navigation_driver" pkg="advanced_navigation_driver" type="advanced_navigation_driver" args=" /dev/ttyUSB0 1000000">
+	</node>
+
+
+	<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" clear_params="true">
+    		<rosparam command="load" file="$(find robot_localization)/params/navsat_transform_template.yaml" />
+		<remap from="/gps/fix" to="/an_device/NavSatFix"/>
+		<remap from="/imu/data" to="/an_device/Imu"/>
+	</node>
+
+	<!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se2" clear_params="true">
+    		<rosparam command="load" file="/home/roboticsclub/ekf_template_custom2.yaml" />
+
+		<remap from="/odometry/filtered" to="/odometry/filtered2" />
+
+	</node> -->
+
+	<node pkg="new_slam" type="twist_trans.py" name="twist_trans_node" />
+
+</launch>

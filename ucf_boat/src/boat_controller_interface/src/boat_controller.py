@@ -18,7 +18,8 @@ class BoatController:
     MOTORBR = 4
     
     def __init__(self):
-        self.serialPortName = rospy.get_param("controller_serial_port", "/dev/ttyUSB0")
+        self.serialPortName = rospy.get_param("controller_serial_port", "/dev/ttyUSB1")
+        self.ser = serial.Serial(port = self.serialPortName, baudrate = 57600, write_timeout = 1.0)
         self.slip = slip.slip()
     
     def velocityCallback(self, msg):
@@ -33,7 +34,7 @@ class BoatController:
         
         #build message packet
         packet = bytearray()
-        packet.append(13) #Length of motor data
+        packet.append(15) #Length of motor data
         packet.append(self.MCUSETMOTOROUTPUT)
         packet.append(self.MOTORFL)
         packet.extend(struct.pack("h",motors[0]))
@@ -48,12 +49,14 @@ class BoatController:
         for byte in packet:
             checksum += byte
         
-        checksum = checksum % 255
+        checksum = checksum % 256
         
         packet.append(checksum)
         
         print(self.slip.encode(bytes(packet)).encode("string-escape"))
-        
+        self.ser.write(self.slip.encode(bytes(packet)))
+	
+
     def run(self):
         rospy.Subscriber("cmd_vel", Twist, self.velocityCallback)
         

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
+	<include file="$(find new_slam)/launch/newSlam.launch"/>
+
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="LIDAR_publisher" args="0 0 0 0 0 0 1 base_link LIDAR" />
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="baselink_publisher" args="0 0 0 0 0 0 1 odom base_link" />
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="GPS_publisher" args="-0.0635 -0.31115 -0.2921 .7071068 .7071068 0 0 base_link gps" />
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="IMU_publisher" args="-0.0635 -0.31115 -0.2921 .7071068 .7071068 0 0 base_link imu" />
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="CAM_LEFT_publisher" args="-0.0762 0.0508 -0.0762 .5 .5 .5 -.5 base_link CAM_LEFT" />
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="CAM_RIGHT_publisher" args="0.0762 0.0508 -0.0762 -.5 .5 .5 .5 base_link CAM_RIGHT" />
+
+</launch>	
